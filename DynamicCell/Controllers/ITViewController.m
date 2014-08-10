@@ -55,8 +55,6 @@ static CGFloat const kItemHeight = 250;
         self.tableView.bounces = NO;
         self.tableView.showsHorizontalScrollIndicator = NO;
         self.tableView.showsVerticalScrollIndicator = NO;
-        // register nibs for the new table view
-        [self.tableView registerNib:[UINib nibWithNibName:kCellID_ITTableViewCell bundle:nil] forCellReuseIdentifier:kCellID_ITTableViewCell];
     }
 }
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -85,8 +83,12 @@ static CGFloat const kItemHeight = 250;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // dequeue a cell
     ITTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID_ITTableViewCell];
-    cell.delegate = self;
+    if (!cell) {
+        cell = [ITTableViewCell viewWithNibName:nil];
+        cell.delegate = self;
+    }
     NSInteger itemsPerCell =  [self itemsPerCell];
     NSInteger length = itemsPerCell;
     NSInteger location = itemsPerCell * [indexPath row];

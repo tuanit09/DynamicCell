@@ -28,11 +28,6 @@
 }
 -(void)setItemViews:(NSArray *)itemViews
 {
-    if (self.itemViews) {
-        for (UIView *itemView in self.itemViews) {
-            [itemView removeFromSuperview];
-        }
-    }
     _itemViews = itemViews;
     if (self.itemViews) {
         for (ITItemView *itemView in self.itemViews) {
